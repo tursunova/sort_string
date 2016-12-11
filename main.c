@@ -9,7 +9,7 @@ char **newArray(char **s, int n, int *len) {
 	{
 		a[i] = (char*)malloc(sizeof(char)*(len[i]+1));
 		int k = 0;
-		while (k<=len[i])
+		while (k<len[i])
 		{
 			a[i][k] = s[i][k];
 			k++;
@@ -76,47 +76,51 @@ void quickSort(char **s, int len)
 }
 
 
-void merge(char **arr,int low,int mid,int high)
+void merge(char **arr, int low, int mid, int high)
 {
     int nL= mid-low+1;
     int nR= high-mid;
 
     char** L=malloc(sizeof(char *)*nL);
     char** R=malloc(sizeof(char *)*nR);
-    int i;
-    for(i=0;i<nL;i++)
+    int i, j, k;
+
+    for (i = 0; i < nL; i++)
     {
-        L[i]=malloc(sizeof(arr[low+i]));
-        strcpy(L[i],arr[low+i]);
+        L[i] = arr[low+i];
     }
-    for(i=0;i<nR;i++)
+
+    for (j = 0; j < nR; j++)
     {
-        R[i]=malloc(sizeof(arr[mid+i+1]));
-        strcpy(R[i],arr[mid+i+1]);
+        R[j] = arr[mid+j+1];
     }
-    int j=0,k;
-    i=0;
-    k=low;
+
+    i = 0;
+    j = 0;
+    k = low;
+
     while(i<nL&&j<nR)
     {
-        if(strcmp(L[i],R[j])<0)strcpy(arr[k++],L[i++]);
-        else strcpy(arr[k++],R[j++]);
+        if(strcmp(L[i],R[j])<0)
+        {
+            arr[k++] = L[i++];
+        }
+        else
+        {
+            arr[k++] = R[j++];
+        }
     }
-    while(i<nL)strcpy(arr[k++],L[i++]);
-    while(j<nR)strcpy(arr[k++],R[j++]);
-
-    for(i = 0; i < nL; i++ ) {
-        free(L[i]);
+    while (i<nL)
+    {
+        arr[k++] = L[i++];
+    }
+    while (j<nR)
+    {
+        arr[k++] = R[j++];
     }
     free(L);
-
-    for( i = 0; i < nR; i++ ) {
-        free(R[i]);
-    }
     free(R);
-
 }
-
 
 void mergeSort(char **arr,int low,int high)
 {
@@ -128,7 +132,6 @@ void mergeSort(char **arr,int low,int high)
         merge(arr,low,mid,high);
     }
 }
-
 
 int main(int argc, char** argv)
 {
